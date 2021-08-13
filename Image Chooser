@@ -1,0 +1,13 @@
+
+Intent(Intent.ACTION_GET_CONTENT).also{
+        it.type = "image/*"
+        startActivityForResult(it,0)
+}
+
+
+## Implement OnActivityResult
+
+if(resultCode == Activity.RESULT_OK && requestCode == 0){
+        val uri = data?.data
+        //access image through uri variable
+}
