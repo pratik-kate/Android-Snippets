@@ -1,0 +1,41 @@
+## Create menu resource directory
+## create menu.xml file to it
+
+            <?xml version="1.0" encoding="utf-8"?>
+            <menu xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+            <item android:id="@+id/itemAbout"
+                android:title="About"
+                android:icon="@drawable/ic_about"/>
+
+                <item android:id="@+id/itemSetting"
+                    android:title="Settings"
+                    android:icon="@drawable/ic_baseline_settings_24"/>
+
+                <item android:id="@+id/itemAdd"
+                    android:title="addTask"
+                    android:icon="@drawable/ic_add"
+                    app:showAsAction="always"/>
+            </menu>
+            
+            
+## In Main Activity
+## override onCreateOptionMenu()      [for inflating menu layout]
+
+           override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+                menuInflater.inflate(R.menu.menu,menu)
+                return true
+            }
+            
+## override onOptionItemSelected()     [for adding click listners]
+
+           override fun onOptionsItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                   R.id.itemAbout-> Toast.makeText(this,"About",Toast.LENGTH_SHORT).show()
+                    R.id.itemSetting-> Toast.makeText(this,"Settings",Toast.LENGTH_SHORT).show()
+                    R.id.itemAdd-> Toast.makeText(this,"Add",Toast.LENGTH_SHORT).show()
+                }
+                return true
+            }
+            
+            
