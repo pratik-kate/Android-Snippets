@@ -1,0 +1,81 @@
+Step 1: Create Layout File for Recycler view item
+
+Step 2: Create Data class for items.
+
+          data class Todos(
+              val title: String,
+              val checked: Boolean
+          )
+
+Step 3: Create an adapter for recycler view
+
+          import android.view.LayoutInflater
+          import android.view.View
+          import android.view.ViewGroup
+          import androidx.recyclerview.widget.RecyclerView
+          import kotlinx.android.synthetic.main.todo_item.view.*
+
+          //create adapter which extends RecyclerView.Adapter of type ViewHolder which is an inner class
+          class TodoAdapter(
+              var todoList: List<Todos>
+          ): RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+
+              //make inner class and pass itemView: View to it and extend it by RecyclerView.ViewHolder
+              inner class TodoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+
+              //implement all 3 methods of Adapter
+              override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
+                  //make layout inflater to inflate layout and return it
+                  val view = LayoutInflater.from(parent.context).inflate(
+                      R.layout.todo_item,
+                      parent,
+                      false
+                  )
+                  return TodoViewHolder(view)
+              }
+
+              override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
+                  //bind all views to its data
+                  holder.itemView.apply {
+                      todoTitle.text = todoList[position].title
+                      todoStatus.isChecked = todoList[position].checked
+                  }
+              }
+
+              override fun getItemCount(): Int {
+                  //always return the size of the list which is a count of items
+                  return todoList.size
+              }
+          }
+          
+Step 4: create list of type [Data class] in Main Activity and create adapter,layout manager for Recycler view
+
+          import androidx.appcompat.app.AppCompatActivity
+          import android.os.Bundle
+          import androidx.recyclerview.widget.LinearLayoutManager
+          import kotlinx.android.synthetic.main.activity_main.*
+
+          class MainActivity : AppCompatActivity() {
+              override fun onCreate(savedInstanceState: Bundle?) {
+                  super.onCreate(savedInstanceState)
+                  setContentView(R.layout.activity_main)
+
+                  //create list of tyoe [data class]
+                  var list = mutableListOf(
+                      Todos("Go to Office",false),
+                      Todos("Attend the meeting",false),
+                      Todos("Submit the documents",false),
+                      Todos("Visit the shop",false)
+                  )
+
+                  //create adapter for the Recycler view
+                  val adapter = TodoAdapter(list)
+                  rvToDo.adapter = adapter
+
+                  //set layout manager for the Recycler view
+                  rvToDo.layoutManager = LinearLayoutManager(this)
+
+              }
+          }
+
+
